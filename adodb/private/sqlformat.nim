@@ -50,7 +50,9 @@ Special construction form for timestamps: ```#{ <year>, <month>, <day> [, <hour>
     # Output:
     # SELECT * FROM Users WHERE ((user_bday)=>#12/31/1999#)
 
-### Timestamp inputs:
+### Timestamp literals and custom formats.
+
+Timestamp literal should be delimited by ##.
    
 .. code-block:: nim
 
@@ -59,13 +61,14 @@ Special construction form for timestamps: ```#{ <year>, <month>, <day> [, <hour>
     # Output:
     # SELECT * FROM Users WHERE ((user_bday)=>#12/31/1999#)
 
-### Timestamp custom formats:
+#### -- Date in timestamp literal
 
-Regardless that standard timestamp format is `#m/d/y#` it is possible to set other format:
+Regardless that SQL standard requires date in timestamps to be in form 
+`m(onth)/d(ay)/y(ear)` it is possible to set regional specific (custom) formats:
 
-     * `#d.m.y#` (dot as delimiter)
+     * `#d.m.y#` (with dot as field delimiter)
    
-     * `#y-m-d#` (dash as delimiter)
+     * `#y-m-d#` (with dash as field delimiter)
 
 .. code-block:: nim
 
@@ -79,15 +82,28 @@ Regardless that standard timestamp format is `#m/d/y#` it is possible to set oth
     # Output:
     # SELECT * FROM Users WHERE ((user_bday)=>#12/31/1999#)
 
+#### -- Time in timestamp literal
 
-SQL literal parser (called by `$%` macro) automaticaly will convert specific timestamp to 
-standard format
+Time in timestamp literal is optional. If set it should be in form 
+`h(our):m(inutes):s(econds)` with optional AM / PM suffixes
+
+.. code-block:: nim
+
+    echo sql"UPDATE operations SET created=#15.1.1998 14:03#"
+    
+    # Output:
+    # UPDATE operations SET created=#15/1/1998 14:03#
+
+    echo sql"UPDATE operations SET created=#15.1.1998 2:03p.m.#"
+    
+    # Output:
+    # UPDATE operations SET created=#15/1/1998 2:03 PM#
 
 ]##
 
 import macros, parseutils, unicode
 import strutils
-import adodb\private\[parsetimestamp, parsefield]
+import parsetimestamp, parsefield
 
 from times as tm import nil
 
