@@ -138,8 +138,6 @@ template dbFormatTS*(year, month, day: int; hour: int = 0; minute: int = 0; seco
 template callField(res, arg) {.dirty.} =
    when arg is string:
       res.add arg
-   elif compiles(add(res, arg)):
-      res.add(arg)
    else:
       res.add($arg)
 
