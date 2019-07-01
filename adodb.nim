@@ -65,14 +65,16 @@ For Access > 2007 (\*.accdb):
 {.deadCodeElim: on.}
 
 import tables
-import winim/com as wincom
+import threadpool
 import os
 import unicode
-
-import adodb/private/sqlformat
+import segfaults
 import times
 
-export wincom, sqlformat, times
+import winim/com
+import adodb/private/sqlformat
+
+export com, sqlformat, times
 
 type
    ADODB* = ref object
@@ -91,14 +93,21 @@ type
       parent: ADORecordset
       data: ADODataRow
 
+   ADOResult = ref object
+      rst: ADORecordset
+      err: ref Exception
+
 # ADOField method & properties
 proc init(self: ADOField, v: variant) =
    self.data = copy(v)
 
-proc final(self: ADOField) =
+proc done(self: ADOField) =
    if not self.data.isNil:
       self.data.del
    self.data = nil
+
+proc final(self: ADOField) =
+   self.done
 
 proc value(self: ADOField): variant =  copy(self.data)
 
@@ -112,16 +121,18 @@ proc init(self: ADORecordset, rst: com) =
 
    if rst.BOF() != -1 or rst.EOF() != -1:
       let fields = rst.Fields()
-
-      for fld in fields:
-         let fldName: string = fld.Name()
-         self.fields[fldName.toLower()] = self.fields.len
+      let fieldCount = fields.Count()
 
       rst.MoveFirst()
-      
       while rst.EOF() != -1:
          self.data.add(@[])
-         for fld in fields:
+         for i in 0 ..< fieldCount:
+            let fld = fields.Item(i)
+            
+            if self.fields.len < fieldCount:
+               let fldName: string = fld.Name()
+               self.fields[fldName.toLower()] = self.fields.len
+      
             self.data[self.data.len - 1].add(newADOField(fld.Value()))
          rst.MoveNext()
 
@@ -133,6 +144,7 @@ proc close*(self: ADORecordset) =
       var row = self.data.pop
       while row.len > 0:
          var fld = row.pop
+         fld.done
          fld = nil
 
 proc final(self: ADORecordset) =
@@ -142,7 +154,7 @@ proc newADORecordset(rst: com): ADORecordset =
    new(result, final)
    result.init(rst)
          
-proc len*(self: ADORecordset): int {.inline.} = self.data.len
+proc len*(self: ADORecordset): int = self.data.len
    ## returns row count of ADORecordset
 
 template rowCount*(self: ADORecordset): int = self.len
@@ -161,12 +173,12 @@ proc `[]`*(self: ADORecordset, index: Natural): ADORow =
    ## return index-th (from 0 to len-1) row of recordset 
    result = newADORow(self, self.data[index])
 
-iterator items*(self: ADORecordset): ADORow {.inline.} =
+iterator items*(self: ADORecordset): ADORow =
    ## iterates through recordset rows
    for row in self.data:
       yield newADORow(self, row)
 
-iterator pairs*(self: ADORecordset): (int, ADORow) {.inline.} =
+iterator pairs*(self: ADORecordset): (int, ADORow) =
    ## iterates through rows, returns pair (index, ADORow)
    for rowIdx, row in self.data:
       yield (rowIdx, newADORow(self, row))
@@ -180,23 +192,23 @@ proc `[]`*(row: ADORow, field: string): variant =
    let index = row.parent.fields[field.toLower()]
    return row.data[index].value
 
-proc len*(row: ADORow): int {.inline.} = row.data.len
+proc len*(row: ADORow): int = row.data.len
    ## returns count of fields
 
 template fieldCount*(row: ADORow): int = row.len
    ## alias of len
 
-iterator items*(row: ADORow): variant {.inline.} =
+iterator items*(row: ADORow): variant =
    ## iterates all columns of row
    for fld in row.data:
       yield fld.value
 
-iterator pairs*(row: ADORow): (int, variant) {.inline.} =
+iterator pairs*(row: ADORow): (int, variant) =
    ## iterates all columns, return pair (index, value)
    for fldIdx, fld in row.data:
       yield (fldIdx, fld.value)
 
-iterator fields*(row: ADORow): (int, string, variant) {.inline.} =
+iterator fields*(row: ADORow): (int, string, variant) =
    ## iterates all columns, return (index, field name, value)
    let fields = row.parent.fields
    for fldName, fldIdx in fields.pairs:
@@ -207,47 +219,87 @@ proc release(o: var com) =
 
    if o.State() != 0:
       o.Close()
-   
+
+   o.del
    o = nil
 
-# ADODB methods and properties
-proc query*(adoDb: ADODB; sql: string): ADORecordset =
-   ## retrieve recordset by SQL statement
+proc thQuery(connection, sql: string): ADOResult =
+   {.gcsafe.}:
+      ## retrieve recordset by SQL statement
+      new(result)
 
-   var rst: com = nil
+      var rst: com
 
-   try:
-      # Create recorsed
-      rst = CreateObject("ADODB.Recordset")
+      try:
+         CoInitialize(nil)
 
-      # Open recordset
-      rst.Open(sql, adoDb.connection, 0, 1)
+         rst = CreateObject("ADODB.Recordset")
+     
+         # Query
+         discard rst.Open(sql, connection, 0, 1)
+     
+         # Get data
+         result.rst = newADORecordset(rst)
+      
+      except:
+         result.err = getCurrentException()
 
-      # Query data
-      result = newADORecordset(rst)
-   finally:
-      rst.release()
+      finally:
+         rst.release()
+         CoUninitialize()
+
+proc query*(adoDb: ADODB; sql: string): ADORecordset = 
+   let resFlow = spawn thQuery(adoDb.connection, sql)
+   let res = ^resFlow
+   
+   if not res.err.isNil:
+      raise res.err
+
+   return res.rst
+
+
+proc thExec(connection, sql: string): ADOResult =
+   ## execute SQL statement
+   {.gcsafe.}:
+
+      ## retrieve recordset by SQL statement
+      new(result)
+
+      var conn: com = nil
+      
+      
+      try:
+         CoInitialize(nil)
+         # Create connection
+         conn = CreateObject("ADODB.Connection")
+         
+         # Set CursorLocation
+         conn.CursorLocation = 3
+
+         discard conn.Open(connection)
+
+         # Execute
+         discard conn.Execute(sql)
+
+      except:
+         result.err = getCurrentException()
+
+      finally:
+         conn.release()
+         COM_FullRelease()
+         CoUninitialize()
 
 proc exec*(adoDb: ADODB; sql: string) =
-   ## execute SQL statement
-
-   var conn: com = nil
-   try:
-      # Create connection
-      conn = CreateObject("ADODB.Connection")
-
-      # Open
-      discard conn.Open(adoDb.connection)
-
-      # Execute
-      discard conn.Execute(sql)
-   finally:
-      conn.release()
+   let resFlow = spawn thExec(adoDb.connection, sql)
+   let res = ^resFlow
+   
+   if not res.err.isNil:
+      raise res.err
 
 proc init(self: ADODB, connection: string) =
    self.connection = connection
 
-proc newADODB*(connection: string): ADODB {.inline.} =
+proc newADODB*(connection: string): ADODB =
    ## Constructor
    new(result)
    result.init(connection)
@@ -268,57 +320,57 @@ template nz*(v, valueIfNull): untyped =
 
 # Several data aggregation methods
 
-proc dQuery(adoDb: ADODB; functor, field, domain, where: string): variant =
-   # base procedure, that is used for all aggregate functions
-   result = nil
+proc dQuery[T](adoDb: ADODB; functor, field, domain, where: string): T =
    var statement = sql"SELECT {functor}({field}) AS {functor}Of{field} FROM {domain}"
    if where != "":
       statement.add sql" WHERE ({where})"
 
-   let rst = adoDb.query(statement)
+   let resFlow = spawn thQuery(adoDb.connection, statement)
+   let res = ^resFlow
    
-   if rst.rowCount != 0 and rst[0].fieldCount != 0:
-      result = rst[0][0]
-   
-   rst.close
+   if not res.err.isNil:
+      raise res.err
 
-proc dMax*(adoDb: ADODB; field, domain: string; criteria: string = ""): variant {.inline.} =
+   result = fromVariant[T](res.rst[0][0])
+   res.rst.close
+
+proc dMax*[T](adoDb: ADODB; field, domain: string; criteria: string = ""): T =
    ## return Max value of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "Max", field, domain , criteria)
+   result = dQuery[T](adoDb, "Max", field, domain , criteria)
 
-proc dMin*(adoDb: ADODB; field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dMin*[T](adoDb: ADODB; field, domain: string; criteria: string = ""): T =
    ## return Min value of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "Min", field, domain , criteria)
+   result = dQuery[T](adoDb, "Min", field, domain , criteria)
       
-proc dFirst*(adoDb: ADODB; field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dFirst*[T](adoDb: ADODB; field, domain: string; criteria: string = ""): T =
    ## return first value of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "First", field, domain , criteria)
+   result = dQuery[T](adoDb, "First", field, domain , criteria)
    
-proc dLast*(adoDb: ADODB; field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dLast*[T](adoDb: ADODB; field, domain: string; criteria: string = ""): T =
    ## return last value of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "Last", field, domain , criteria)
+   result = dQuery[T](adoDb, "Last", field, domain , criteria)
       
-proc dLookup*(adoDb: ADODB; field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dLookup*[T](adoDb: ADODB; field, domain: string; criteria: string = ""): T =
    ## return value of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "", field, domain , criteria)
+   result = dQuery[T](adoDb, "", field, domain , criteria)
 
 proc dCount*(adoDb: ADODB; field, domain: string; criteria: string = ""): int =
    ## return count of rows by field in domain, 0 if no data in domain
    ## (optional criteria can be applied)
-   nz(dQuery(adoDb, "Count", field, domain , criteria), 0)
+   result = dQuery[int](adoDb, "Count", field, domain , criteria)
 
-proc dSum*(adoDb: ADODB, field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dSum*(adoDb: ADODB, field, domain: string; criteria: string = ""): float =
    ## return sum of all values of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "Sum", field, domain, criteria)
+   result = dQuery[float](adoDb, "Sum", field, domain, criteria)
 
-proc dAvg*(adoDb: ADODB, field, domain: string; criteria: string = ""): variant {.inline.} =
+proc dAvg*(adoDb: ADODB, field, domain: string; criteria: string = ""): float =
    ## return average value of all values of field in domain, null if no data in domain
    ## (optional criteria can be applied)
-   dQuery(adoDb, "Avg", field, domain, criteria)
+   result = dQuery[float](adoDb, "Avg", field, domain, criteria)
    

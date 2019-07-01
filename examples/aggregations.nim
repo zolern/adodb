@@ -7,7 +7,7 @@ let
    uid = "user_id"
 
 
-var userId: int = nz(db.dMax(uid, tbl), 0)
+var userId: int = db.dMax[:int](uid, tbl)
 
 db.exec(sql"DELETE * FROM {tbl}")
 
@@ -23,7 +23,7 @@ proc iteration(id: var int) =
 
    if count >= 1000:
       # keep count of records to not exceed 1000
-      let minID = db.dMin(uid, tbl)
+      let minID = db.dMin[:int](uid, tbl)
       db.exec(sql"DELETE * FROM {tbl} WHERE (({uid})={minID})")
 
    stdout.write('\r', fmt"MaxID: {id:>5}, Count: {count:>4}, Total sum: {sum:>9.2f}, Average: {avg:>6.2f}")
