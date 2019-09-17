@@ -25,4 +25,4 @@ let rst = ado.query($&"SELECT * FROM {tbl}")
 
 for rowIdx, row in rst:
    for idx, name, fld in row.fields:
-      echo "Row ", rowIdx, ", Fld[", idx," | ", name, "] = ", nz(fld, "!!! Not set !!!")
+      echo "Row ", rowIdx, ", Fld[", idx," | ", name, "] = ", $fld

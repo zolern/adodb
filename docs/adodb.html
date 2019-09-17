@@ -99,6 +99,23 @@ input#searchInput {
   width: 80%;
 }
 
+/*
+ * Some custom formatting for input forms.
+ * This also fixes input form colors on Firefox with a dark system theme on Linux.
+ */
+input {
+  -moz-appearance: none;
+  color: #333;
+  background-color: #f8f8f8;
+  border: 1px solid #aaa;
+  font-family: "Lato", "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  padding: 6px;
+}
+input:focus {
+  border: 1px solid #1fa0eb;
+  box-shadow: 0 0 2px #1fa0eb;
+}
 
 /* Docgen styles */
 /* Links */
@@ -345,11 +362,11 @@ dl {
 
 dt {
   margin-bottom: -0.5em;
-  margin-left: 0.5em; }
+  margin-left: 0.0em; }
 
 dd {
-  margin-left: 0.5em;
-  margin-bottom: 2.5em;
+  margin-left: 2.0em;
+  margin-bottom: 3.0em;
   margin-top: 0.5em; }
 
 
@@ -761,6 +778,10 @@ span.pragmawrap {
   display: none;
 }
 
+span.attachedType {
+  display: none;
+  visibility: hidden;
+}
 </style>
 
 <script type="text/javascript" src="dochack.js"></script>
@@ -803,12 +824,6 @@ function main() {
   </div>
   <ul class="simple simple-toc" id="toc-list">
 <li>
-  <a class="reference reference-toplevel" href="#5" id="55">Exports</a>
-  <ul class="simple simple-toc-section">
-    
-  </ul>
-</li>
-<li>
   <a class="reference reference-toplevel" href="#6" id="56">Imports</a>
   <ul class="simple simple-toc-section">
     
@@ -819,55 +834,57 @@ function main() {
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#ADODB"
     title="ADODB = ref object
-  connection: string"><wbr />ADODB<span class="attachedType" style="visibility:hidden"></span></a></li>
+  connection: string"><wbr />ADODB<span class="attachedType"></span></a></li>
   <li><a class="reference" href="#ADORecordset"
     title="ADORecordset = ref object
-  fields: OrderedTableRef[string, int]
-  data*: seq[ADODataRow]"><wbr />ADORecordset<span class="attachedType" style="visibility:hidden"></span></a></li>
+  fieldNames: OrderedTableRef[string, int]
+  rows*: seq[ADODataRow]"><wbr />ADORecordset<span class="attachedType"></span></a></li>
   <li><a class="reference" href="#ADORow"
     title="ADORow = ref object
   parent: ADORecordset
-  data: ADODataRow"><wbr />ADORow<span class="attachedType" style="visibility:hidden"></span></a></li>
+  fields: ADODataRow"><wbr />ADORow<span class="attachedType"></span></a></li>
 
   </ul>
 </li>
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#close%2CADORecordset"
-    title="close(self: ADORecordset)"><wbr />close<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
-  <li><a class="reference" href="#len%2CADORecordset"
-    title="len(self: ADORecordset): int"><wbr />len<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
+      <li><a class="reference" href="#len%2CADORecordset"
+    title="len(self: ADORecordset): int"><wbr />len<span class="attachedType">ADORecordset</span></a></li>
   <li><a class="reference" href="#%5B%5D%2CADORecordset%2CNatural"
-    title="`[]`(self: ADORecordset; index: Natural): ADORow"><wbr />`[]`<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
+    title="`[]`(self: ADORecordset; index: Natural): ADORow"><wbr />`[]`<span class="attachedType">ADORecordset</span></a></li>
   <li><a class="reference" href="#%5B%5D%2CADORow%2CNatural"
-    title="`[]`(row: ADORow; index: Natural): variant"><wbr />`[]`<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="`[]`(row: ADORow; index: Natural): ADOField"><wbr />`[]`<span class="attachedType">ADORow</span></a></li>
   <li><a class="reference" href="#%5B%5D%2CADORow%2Cstring"
-    title="`[]`(row: ADORow; field: string): variant"><wbr />`[]`<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="`[]`(row: ADORow; field: string): ADOField"><wbr />`[]`<span class="attachedType">ADORow</span></a></li>
   <li><a class="reference" href="#len%2CADORow"
-    title="len(row: ADORow): int"><wbr />len<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="len(row: ADORow): int"><wbr />len<span class="attachedType">ADORow</span></a></li>
+  <li><a class="reference" href="#value%2CADOField"
+    title="value[T](fld: ADOField): T"><wbr />value<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#%24%2CADOField"
+    title="`$`(fld: ADOField): string"><wbr />`$`<span class="attachedType"></span></a></li>
   <li><a class="reference" href="#query%2CADODB%2Cstring"
-    title="query(adoDb: ADODB; sql: string): ADORecordset"><wbr />query<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="query(adoDb: ADODB; sql: string): ADORecordset"><wbr />query<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#exec%2CADODB%2Cstring"
-    title="exec(adoDb: ADODB; sql: string)"><wbr />exec<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="exec(adoDb: ADODB; sql: string)"><wbr />exec<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#newADODB%2Cstring"
-    title="newADODB(connection: string): ADODB"><wbr />new<wbr />ADODB<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="newADODB(connection: string): ADODB"><wbr />new<wbr />ADODB<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dMax%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dMax(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Max<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dMax[T](adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): T"><wbr />d<wbr />Max<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dMin%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dMin(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Min<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dMin[T](adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): T"><wbr />d<wbr />Min<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dFirst%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dFirst(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />First<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dFirst[T](adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): T"><wbr />d<wbr />First<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dLast%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dLast(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Last<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dLast[T](adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): T"><wbr />d<wbr />Last<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dLookup%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dLookup(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Lookup<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dLookup[T](adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): T"><wbr />d<wbr />Lookup<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dCount%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dCount(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): int"><wbr />d<wbr />Count<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dCount(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): int"><wbr />d<wbr />Count<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dSum%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dSum(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Sum<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dSum(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): float"><wbr />d<wbr />Sum<span class="attachedType">ADODB</span></a></li>
   <li><a class="reference" href="#dAvg%2CADODB%2Cstring%2Cstring%2Cstring"
-    title="dAvg(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): variant"><wbr />d<wbr />Avg<span class="attachedType" style="visibility:hidden">ADODB</span></a></li>
+    title="dAvg(adoDb: ADODB; field, domain: string; criteria: string = &quot;&quot;): float"><wbr />d<wbr />Avg<span class="attachedType">ADODB</span></a></li>
 
   </ul>
 </li>
@@ -875,15 +892,33 @@ function main() {
   <a class="reference reference-toplevel" href="#15" id="65">Iterators</a>
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#items.i%2CADORecordset"
-    title="items(self: ADORecordset): ADORow"><wbr />items<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
+    title="items(self: ADORecordset): ADORow"><wbr />items<span class="attachedType">ADORecordset</span></a></li>
   <li><a class="reference" href="#pairs.i%2CADORecordset"
-    title="pairs(self: ADORecordset): (int, ADORow)"><wbr />pairs<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
+    title="pairs(self: ADORecordset): (int, ADORow)"><wbr />pairs<span class="attachedType">ADORecordset</span></a></li>
   <li><a class="reference" href="#items.i%2CADORow"
-    title="items(row: ADORow): variant"><wbr />items<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="items(row: ADORow): ADOField"><wbr />items<span class="attachedType">ADORow</span></a></li>
   <li><a class="reference" href="#pairs.i%2CADORow"
-    title="pairs(row: ADORow): (int, variant)"><wbr />pairs<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="pairs(row: ADORow): (int, ADOField)"><wbr />pairs<span class="attachedType">ADORow</span></a></li>
   <li><a class="reference" href="#fields.i%2CADORow"
-    title="fields(row: ADORow): (int, string, variant)"><wbr />fields<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
+    title="fields(row: ADORow): (int, string, ADOField)"><wbr />fields<span class="attachedType">ADORow</span></a></li>
+
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#16" id="66">Converters</a>
+  <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#adoFieldToDateTime.c%2CADOField"
+    title="adoFieldToDateTime(fld: ADOField): DateTime"><wbr />ado<wbr />Field<wbr />To<wbr />Date<wbr />Time<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#adoFieldToString.c%2CADOField"
+    title="adoFieldToString(fld: ADOField): string"><wbr />ado<wbr />Field<wbr />To<wbr />String<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#adoFieldToInt.c%2CADOField"
+    title="adoFieldToInt(fld: ADOField): int"><wbr />ado<wbr />Field<wbr />To<wbr />Int<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#adoFieldToBiggestInt.c%2CADOField"
+    title="adoFieldToBiggestInt(fld: ADOField): BiggestInt"><wbr />ado<wbr />Field<wbr />To<wbr />Biggest<wbr />Int<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#adoFieldToFloat.c%2CADOField"
+    title="adoFieldToFloat(fld: ADOField): float"><wbr />ado<wbr />Field<wbr />To<wbr />Float<span class="attachedType"></span></a></li>
+  <li><a class="reference" href="#adoFieldToBool.c%2CADOField"
+    title="adoFieldToBool(fld: ADOField): bool"><wbr />ado<wbr />Field<wbr />To<wbr />Bool<span class="attachedType"></span></a></li>
 
   </ul>
 </li>
@@ -891,14 +926,16 @@ function main() {
   <a class="reference reference-toplevel" href="#18" id="68">Templates</a>
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#rowCount.t%2CADORecordset"
-    title="rowCount(self: ADORecordset): int"><wbr />row<wbr />Count<span class="attachedType" style="visibility:hidden">ADORecordset</span></a></li>
+    title="rowCount(self: ADORecordset): int"><wbr />row<wbr />Count<span class="attachedType">ADORecordset</span></a></li>
   <li><a class="reference" href="#fieldCount.t%2CADORow"
-    title="fieldCount(row: ADORow): int"><wbr />field<wbr />Count<span class="attachedType" style="visibility:hidden">ADORow</span></a></li>
-  <li><a class="reference" href="#isNull.t"
-    title="isNull(v): bool"><wbr />is<wbr />Null<span class="attachedType" style="visibility:hidden"></span></a></li>
-  <li><a class="reference" href="#nz.t%2C%2C"
-    title="nz(v, valueIfNull): untyped"><wbr />nz<span class="attachedType" style="visibility:hidden"></span></a></li>
+    title="fieldCount(row: ADORow): int"><wbr />field<wbr />Count<span class="attachedType">ADORow</span></a></li>
 
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#19" id="69">Exports</a>
+  <ul class="simple simple-toc-section">
+    
   </ul>
 </li>
 
@@ -907,6 +944,7 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
+  
   <p class="module-desc"><p>This module provides methods for access ADO DB compatible databases. SQL string literal interpolation and timestamp literal processing also included. Some useful routines, like NZ or DSum are provided also.</p>
 <p>Nim implementation was strongly inspired from nodeJS npm module <a class="reference external" href="https://github.com/nuintun/node-adodb">node-adodb</a> and uses almost the same idea to access ADO DB with query and exec methods.</p>
 <p>(adodb uses <a class="reference external" href="https://github.com/khchen/winim">winim</a> for low-level access to Microsoft ADO)</p>
@@ -932,10 +970,8 @@ function main() {
 <span class="Comment"># Access data</span>
 <span class="Keyword">for</span> <span class="Identifier">rowIdx</span><span class="Punctuation">,</span> <span class="Identifier">row</span> <span class="Keyword">in</span> <span class="Identifier">rst</span><span class="Punctuation">:</span>
    <span class="Keyword">for</span> <span class="Identifier">idx</span><span class="Punctuation">,</span> <span class="Identifier">name</span><span class="Punctuation">,</span> <span class="Identifier">fld</span> <span class="Keyword">in</span> <span class="Identifier">row</span><span class="Operator">.</span><span class="Identifier">fields</span><span class="Punctuation">:</span>
-      <span class="Identifier">echo</span> <span class="StringLit">&quot;Row &quot;</span><span class="Punctuation">,</span> <span class="Identifier">rowIdx</span><span class="Punctuation">,</span> <span class="StringLit">&quot;, Fld[&quot;</span><span class="Punctuation">,</span> <span class="Identifier">idx</span><span class="Punctuation">,</span><span class="StringLit">&quot; | &quot;</span><span class="Punctuation">,</span> <span class="Identifier">name</span><span class="Punctuation">,</span> <span class="StringLit">&quot;] = &quot;</span><span class="Punctuation">,</span> <span class="Identifier">fld</span></pre><p>To compile:</p>
+      <span class="Identifier">echo</span> <span class="StringLit">&quot;Row &quot;</span><span class="Punctuation">,</span> <span class="Identifier">rowIdx</span><span class="Punctuation">,</span> <span class="StringLit">&quot;, Fld[&quot;</span><span class="Punctuation">,</span> <span class="Identifier">idx</span><span class="Punctuation">,</span><span class="StringLit">&quot; | &quot;</span><span class="Punctuation">,</span> <span class="Identifier">name</span><span class="Punctuation">,</span> <span class="StringLit">&quot;] = &quot;</span><span class="Punctuation">,</span> <span class="Operator">$</span><span class="Identifier">fld</span></pre><p>To compile:</p>
 <pre class="listing"><span class="Identifier">nim</span> <span class="Identifier">c</span> <span class="Identifier">source</span><span class="Operator">.</span><span class="Identifier">nim</span>
-   <span class="Identifier">add</span> <span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">winansi</span> <span class="Keyword">or</span> <span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">useWinAnsi</span> <span class="Keyword">for</span> <span class="Identifier">Ansi</span> <span class="Identifier">version</span> <span class="Punctuation">(</span><span class="Identifier">Unicode</span> <span class="Identifier">by</span> <span class="Identifier">default</span><span class="Punctuation">)</span>
-   <span class="Identifier">add</span> <span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">notrace</span> <span class="Identifier">disable</span> <span class="Identifier">COM</span> <span class="Identifier">objects</span> <span class="Identifier">trace</span><span class="Operator">.</span> <span class="Identifier">See</span> <span class="Identifier">com</span><span class="Operator">.</span><span class="Identifier">nim</span> <span class="Keyword">for</span> <span class="Identifier">details</span><span class="Operator">.</span>
    <span class="Identifier">add</span> <span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">useWinXP</span> <span class="Keyword">for</span> <span class="Identifier">Windows</span> <span class="Identifier">XP</span> <span class="Identifier">compatibility</span><span class="Operator">.</span></pre><p>Database connection strings:</p>
 <dl class="docutils"><dt>For Access 2000-2003 (*.mdb):</dt>
 <dd><pre class="listing"><span class="Identifier">connect</span> <span class="Operator">=</span> <span class="StringLit">&quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=&lt;path-to-mdb-file&gt;;&quot;</span></pre></dd>
@@ -944,15 +980,10 @@ function main() {
 <dd><pre class="listing"><span class="Identifier">connect</span> <span class="Operator">=</span> <span class="StringLit">&quot;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=&lt;path-to-accdb-file&gt;;Persist Security Info=False;&quot;</span></pre></dd>
 </dl>
 </p>
-  <div class="section" id="5">
-<h1><a class="toc-backref" href="#5">Exports</a></h1>
-<dl class="item">
-<a href="sqlformat.html#$&amp;"><span class="Identifier">$&amp;</span></a>, <a href="sqlformat.html#sql"><span class="Identifier">sql</span></a>, <a href="sqlformat.html#dbFormatTS"><span class="Identifier">dbFormatTS</span></a>, <a href="sqlformat.html#dbFormatTS"><span class="Identifier">dbFormatTS</span></a>, <a class="reference external" href="sqlformat.html">sqlformat</a>
-</dl></div>
-<div class="section" id="6">
+  <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
 <dl class="item">
-<a class="reference external" href="sqlformat.html">sqlformat</a>
+<a class="reference external" href="sqlformat.html">sqlformat</a>, <a class="reference external" href="parsevariant.html">parsevariant</a>, <a class="reference external" href="jsontime.html">jsontime</a>
 </dl></div>
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
@@ -964,22 +995,25 @@ function main() {
 <dd>
 
 
+
 </dd>
 <a id="ADORecordset"></a>
 <dt><pre><a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
-  <span class="Identifier">fields</span><span class="Other">:</span> <span class="Identifier">OrderedTableRef</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">int</span><span class="Other">]</span>
-  <span class="Identifier">data</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">ADODataRow</span><span class="Other">]</span>
+  <span class="Identifier">fieldNames</span><span class="Other">:</span> <span class="Identifier">OrderedTableRef</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">int</span><span class="Other">]</span>
+  <span class="Identifier">rows</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">ADODataRow</span><span class="Other">]</span>
 </pre></dt>
 <dd>
+
 
 
 </dd>
 <a id="ADORow"></a>
 <dt><pre><a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
   <span class="Identifier">parent</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a>
-  <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">ADODataRow</span>
+  <span class="Identifier">fields</span><span class="Other">:</span> <span class="Identifier">ADODataRow</span>
 </pre></dt>
 <dd>
+
 
 
 </dd>
@@ -988,126 +1022,138 @@ function main() {
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="close,ADORecordset"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#close%2CADORecordset"><span class="Identifier">close</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Release memory allocated for recordset data. It is a good practice to call recordset's 'close' when its data is not needed anymore
-
-</dd>
 <a id="len,ADORecordset"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#len%2CADORecordset"><span class="Identifier">len</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#len%2CADORecordset"><span class="Identifier">len</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 returns row count of ADORecordset
 
 </dd>
 <a id="[],ADORecordset,Natural"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CADORecordset%2CNatural"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">;</span> <span class="Identifier">index</span><span class="Other">:</span> <span class="Identifier">Natural</span><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 return index-th (from 0 to len-1) row of recordset 
 
 </dd>
 <a id="[],ADORow,Natural"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CADORow%2CNatural"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">;</span> <span class="Identifier">index</span><span class="Other">:</span> <span class="Identifier">Natural</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CADORow%2CNatural"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">;</span> <span class="Identifier">index</span><span class="Other">:</span> <span class="Identifier">Natural</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">ADOField</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 returns value by index of column/field
 
 </dd>
 <a id="[],ADORow,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CADORow%2Cstring"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KeyError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CADORow%2Cstring"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">ADOField</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KeyError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 returns value by name of column/field
 
 </dd>
 <a id="len,ADORow"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#len%2CADORow"><span class="Identifier">len</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#len%2CADORow"><span class="Identifier">len</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 returns count of fields
+
+</dd>
+<a id="value,ADOField"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#value%2CADOField"><span class="Identifier">value</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="$,ADOField"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#%24%2CADOField"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
 
 </dd>
 <a id="query,ADODB,string"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#query%2CADODB%2Cstring"><span class="Identifier">query</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">sql</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-retrieve recordset by SQL statement
+
+
 
 </dd>
 <a id="exec,ADODB,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#exec%2CADODB%2Cstring"><span class="Identifier">exec</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">sql</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span>
-    <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#exec%2CADODB%2Cstring"><span class="Identifier">exec</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">sql</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">,</span>
+    <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-execute SQL statement
+
+
 
 </dd>
 <a id="newADODB,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#newADODB%2Cstring"><span class="Identifier">newADODB</span></a><span class="Other">(</span><span class="Identifier">connection</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#newADODB%2Cstring"><span class="Identifier">newADODB</span></a><span class="Other">(</span><span class="Identifier">connection</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Constructor
 
 </dd>
 <a id="dMax,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dMax%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dMax</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#dMax%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dMax</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
+
 return Max value of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dMin,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dMin%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dMin</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#dMin%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dMin</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
+
 return Min value of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dFirst,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dFirst%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dFirst</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#dFirst%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dFirst</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
+
 return first value of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dLast,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dLast%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dLast</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#dLast%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dLast</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
+
 return last value of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dLookup,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dLookup%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dLookup</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#dLookup%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dLookup</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
+
 return value of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dCount,ADODB,string,string,string"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#dCount%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dCount</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 return count of rows by field in domain, 0 if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dSum,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dSum%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dSum</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
+<dt><pre><span class="Keyword">proc</span> <a href="#dSum%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dSum</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 return sum of all values of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
 <a id="dAvg,ADODB,string,string,string"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#dAvg%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dAvg</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
+<dt><pre><span class="Keyword">proc</span> <a href="#dAvg%2CADODB%2Cstring%2Cstring%2Cstring"><span class="Identifier">dAvg</span></a><span class="Other">(</span><span class="Identifier">adoDb</span><span class="Other">:</span> <a href="adodb.html#ADODB"><span class="Identifier">ADODB</span></a><span class="Other">;</span> <span class="Identifier">field</span><span class="Other">,</span> <span class="Identifier">domain</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">criteria</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">,</span> <span class="Identifier">COMError</span><span class="Other">,</span> <span class="Identifier">COMException</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 return average value of all values of field in domain, null if no data in domain (optional criteria can be applied)
 
 </dd>
@@ -1117,36 +1163,85 @@ return average value of all values of field in domain, null if no data in domain
 <h1><a class="toc-backref" href="#15">Iterators</a></h1>
 <dl class="item">
 <a id="items.i,ADORecordset"></a>
-<dt><pre><span class="Keyword">iterator</span> <a href="#items.i%2CADORecordset"><span class="Identifier">items</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">iterator</span> <a href="#items.i%2CADORecordset"><span class="Identifier">items</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 iterates through recordset rows
 
 </dd>
 <a id="pairs.i,ADORecordset"></a>
-<dt><pre><span class="Keyword">iterator</span> <a href="#pairs.i%2CADORecordset"><span class="Identifier">pairs</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">iterator</span> <a href="#pairs.i%2CADORecordset"><span class="Identifier">pairs</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 iterates through rows, returns pair (index, ADORow)
 
 </dd>
 <a id="items.i,ADORow"></a>
-<dt><pre><span class="Keyword">iterator</span> <a href="#items.i%2CADORow"><span class="Identifier">items</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">variant</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">]</span><span class="Other">,</span>
-                                   <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">iterator</span> <a href="#items.i%2CADORow"><span class="Identifier">items</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">ADOField</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 iterates all columns of row
 
 </dd>
 <a id="pairs.i,ADORow"></a>
-<dt><pre><span class="Keyword">iterator</span> <a href="#pairs.i%2CADORow"><span class="Identifier">pairs</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <span class="Identifier">variant</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">iterator</span> <a href="#pairs.i%2CADORow"><span class="Identifier">pairs</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <span class="Identifier">ADOField</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 iterates all columns, return pair (index, value)
 
 </dd>
 <a id="fields.i,ADORow"></a>
-<dt><pre><span class="Keyword">iterator</span> <a href="#fields.i%2CADORow"><span class="Identifier">fields</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">variant</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
-    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">VariantConversionError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">iterator</span> <a href="#fields.i%2CADORow"><span class="Identifier">fields</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">int</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">ADOField</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 iterates all columns, return (index, field name, value)
+
+</dd>
+
+</dl></div>
+<div class="section" id="16">
+<h1><a class="toc-backref" href="#16">Converters</a></h1>
+<dl class="item">
+<a id="adoFieldToDateTime.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToDateTime.c%2CADOField"><span class="Identifier">adoFieldToDateTime</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">DateTime</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="adoFieldToString.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToString.c%2CADOField"><span class="Identifier">adoFieldToString</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="adoFieldToInt.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToInt.c%2CADOField"><span class="Identifier">adoFieldToInt</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="adoFieldToBiggestInt.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToBiggestInt.c%2CADOField"><span class="Identifier">adoFieldToBiggestInt</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">BiggestInt</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="adoFieldToFloat.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToFloat.c%2CADOField"><span class="Identifier">adoFieldToFloat</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+
+</dd>
+<a id="adoFieldToBool.c,ADOField"></a>
+<dt><pre><span class="Keyword">converter</span> <a href="#adoFieldToBool.c%2CADOField"><span class="Identifier">adoFieldToBool</span></a><span class="Other">(</span><span class="Identifier">fld</span><span class="Other">:</span> <span class="Identifier">ADOField</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
 
 </dd>
 
@@ -1157,28 +1252,23 @@ iterates all columns, return (index, field name, value)
 <a id="rowCount.t,ADORecordset"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#rowCount.t%2CADORecordset"><span class="Identifier">rowCount</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="adodb.html#ADORecordset"><span class="Identifier">ADORecordset</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
 <dd>
+
 alias of len
 
 </dd>
 <a id="fieldCount.t,ADORow"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#fieldCount.t%2CADORow"><span class="Identifier">fieldCount</span></a><span class="Other">(</span><span class="Identifier">row</span><span class="Other">:</span> <a href="adodb.html#ADORow"><span class="Identifier">ADORow</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
 <dd>
+
 alias of len
 
 </dd>
-<a id="isNull.t"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#isNull.t"><span class="Identifier">isNull</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
-<dd>
-checks variant is null
 
-</dd>
-<a id="nz.t,,"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#nz.t%2C%2C"><span class="Identifier">nz</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">,</span> <span class="Identifier">valueIfNull</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
-<dd>
-returns v if v is not null, otherwise returns valueIfNull
-
-</dd>
-
+</dl></div>
+<div class="section" id="19">
+<h1><a class="toc-backref" href="#19">Exports</a></h1>
+<dl class="item">
+<a href="sqlformat.html#$&amp;"><span class="Identifier">$&amp;</span></a>, <a href="sqlformat.html#sql"><span class="Identifier">sql</span></a>, <a href="sqlformat.html#dbFormatTS"><span class="Identifier">dbFormatTS</span></a>, <a href="sqlformat.html#dbFormatTS"><span class="Identifier">dbFormatTS</span></a>, <a class="reference external" href="sqlformat.html">sqlformat</a>
 </dl></div>
 
   </div>
@@ -1188,7 +1278,7 @@ returns v if v is not null, otherwise returns valueIfNull
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-02-15 10:27:59 UTC</small>
+        <small>Made with Nim. Generated: 2019-09-17 16:09:33 UTC</small>
       </div>
     </div>
   </div>

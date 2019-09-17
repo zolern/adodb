@@ -1,3 +1,7 @@
+Version 0.4.0
+--------------
+* no move variant as result value, JsonNode used instead
+
 Version 0.3.0
 --------------
 * better memory management
